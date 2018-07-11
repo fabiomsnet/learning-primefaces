@@ -2,16 +2,39 @@ package br.com.fabiomsnet.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Usuario {
 
+	@Id
+	@Column(name="id", nullable=false, unique=true)
 	private int id;
+	
+	@Column (name="firstName", nullable=false, unique=true)
 	private String primeiroNome;
+	
+	@Column (name="lastName", nullable=false, unique=true)
 	private String ultimoNome;
+	
+	@Column (name="email", nullable=false, unique=true)
 	private String email;
+	
+	@Column (name="state", nullable=false, unique=true)
 	private String estado;
+	
+	@Column (name="city", nullable=false, unique=true)
 	private String cidade;
+	
+	@Column (name="active", nullable=false, unique=true)
 	private boolean ativo;
+	
+	@Column (name="status", nullable=false, unique=true)
 	private boolean status;
+	
+	@Column (name="registrationDate", unique=true)
 	private Date dataCadastro;
 
 	public int getId() {
