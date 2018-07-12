@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:messages id="messages" />
+		<p:panelGrid columns="2">
+			<p:outputLabel for="id" value="ID:" />
+			<p:spinner id="id" value="#{UserMB.user.id}" />
+
+
+			<p:outputLabel for="firstName" value="Primeiro Nome:" />
+			<p:inputText id="firstName" value="#{UserMB.user.firstName}" />
+
+
+			<p:outputLabel for="lastName" value="Segundo Nome:" />
+			<p:inputText id="lastName" value="#{UserMB.user.lastName}" />
+
+
+			<p:outputLabel for="email" value="E-mail:" />
+			<p:inputTextarea id="email"
+				value="#{UserMB.user.emial}" />
+
+			<p:commandButton value="Cadastrar" icon="ui-icon-star"
+				action="#{UserMB.cadastraUser}" update="messages">
+			</p:commandButton>
+
+		</p:panelGrid>
+	</h:form>
+</h:body>
+</html>
