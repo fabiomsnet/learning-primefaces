@@ -4,13 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Usuario {
+@Table(name="user")
+public class User {
 
 	@Id
 	@Column(name="id", nullable=false, unique=true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@Column (name="firstName", nullable=false, unique=true)
