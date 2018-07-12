@@ -1,44 +1,88 @@
 package br.com.fabiomsnet.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 import br.com.fabiomsnet.model.User;
 
 public class UserDAO {
 
-	private EntityManagerFactory factory = Persistence.createEntityManagerFactory("users");
-	private EntityManager em = factory.createEntityManager();
+	private static UserDAO instance;
+	protected EntityManager entityManager;
 
-	public User getUser(String nameUser) {
+	public static UserDAO getInstance() {
+		if (instance == null) {
+			instance = new UserDAO();
+		}
+
+		return instance;
+	}
+
+	private UserDAO() {
+		entityManager = getEntityManager();
+	}
+
+	private EntityManager getEntityManager() {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("crudHibernatePU");
+		if (entityManager == null) {
+			entityManager = factory.createEntityManager();
+		}
+
+		return entityManager;
+	}
+
+	public User getById(final int id) {
+		return entityManager.find(User.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<User> findAll() {
+		return entityManager.createQuery("FROM " + User.class.getName()).getResultList();
+	}
+
+	public void persist(User user) {
 		try {
-			User user = (User) em.createQuery("SELECT u from User u where u.firstName = :name")
-					.setParameter("name", nameUser).getSingleResult();
-			return user;
-		} catch (NoResultException e) {
-			return null;
+			entityManager.getTransaction().begin();
+			entityManager.persist(user);
+			entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
 		}
 	}
 
-	public boolean inserirUser(User user) {
+	public void merge(User user) {
 		try {
-			em.persist(user);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			entityManager.getTransaction().begin();
+			entityManager.merge(user);
+			entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
 		}
 	}
 
-	public boolean deletarUser(User user) {
+	public void remove(User user) {
 		try {
-			em.remove(user);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			entityManager.getTransaction().begin();
+			user = entityManager.find(User.class, user.getId());
+			entityManager.remove(user);
+			entityManager.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+		}
+	}
+
+	public void removeById(final int id) {
+		try {
+			User user = getById(id);
+			remove(user);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
