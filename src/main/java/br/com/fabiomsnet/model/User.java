@@ -1,6 +1,6 @@
 package br.com.fabiomsnet.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,39 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
+
 @Entity
-@Table(name="user")
-public class User {
+@Table(name = "user")
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
+	private String primeiroNome;
+	private String ultimoNome;
+	private String email;
 
 	@Id
-	@Column(name="id", nullable=false, unique=true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@Column (name="firstName", nullable=false, unique=true)
-	private String primeiroNome;
-	
-	@Column (name="lastName", nullable=false, unique=true)
-	private String ultimoNome;
-	
-	@Column (name="email", nullable=false, unique=true)
-	private String email;
-	
-	@Column (name="state", nullable=false, unique=true)
-	private String estado;
-	
-	@Column (name="city", nullable=false, unique=true)
-	private String cidade;
-	
-	@Column (name="active", nullable=false, unique=true)
-	private boolean ativo;
-	
-	@Column (name="status", nullable=false, unique=true)
-	private boolean status;
-	
-	@Column (name="registrationDate", unique=true)
-	private Date dataCadastro;
-
+	@Column(name = "id", nullable = false, unique = true)
 	public int getId() {
 		return id;
 	}
@@ -50,6 +33,7 @@ public class User {
 		this.id = id;
 	}
 
+	@Column(name = "firstName", nullable = false, unique = true)
 	public String getPrimeiroNome() {
 		return primeiroNome;
 	}
@@ -58,6 +42,7 @@ public class User {
 		this.primeiroNome = primeiroNome;
 	}
 
+	@Column(name = "lastName", nullable = false, unique = true)
 	public String getUltimoNome() {
 		return ultimoNome;
 	}
@@ -66,6 +51,8 @@ public class User {
 		this.ultimoNome = ultimoNome;
 	}
 
+	@Email
+	@Column(name = "email", nullable = false, unique = true)
 	public String getEmail() {
 		return email;
 	}
@@ -74,44 +61,26 @@ public class User {
 		this.email = email;
 	}
 
-	public String getEstado() {
-		return estado;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	public Date getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 }
