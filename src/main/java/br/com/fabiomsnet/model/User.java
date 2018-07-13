@@ -18,8 +18,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	private String primeiroNome;
-	private String ultimoNome;
+	private String firstName;
+	private String lastName;
 	private String email;
 
 	@Id
@@ -34,21 +34,21 @@ public class User implements Serializable {
 	}
 
 	@Column(name = "firstName", nullable = false, unique = true)
-	public String getPrimeiroNome() {
-		return primeiroNome;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPrimeiroNome(String primeiroNome) {
-		this.primeiroNome = primeiroNome;
+	public void setFirstName(String primeiroNome) {
+		this.firstName = primeiroNome;
 	}
 
 	@Column(name = "lastName", nullable = false, unique = true)
-	public String getUltimoNome() {
-		return ultimoNome;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setUltimoNome(String ultimoNome) {
-		this.ultimoNome = ultimoNome;
+	public void setLastName(String ultimoNome) {
+		this.lastName = ultimoNome;
 	}
 
 	@Email

@@ -9,11 +9,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @ApplicationScoped
-public class EntityManagerProduc {
+public class EntityManagerUser {
 
 	private EntityManagerFactory factory;
 
-	public EntityManagerProduc() {
+	public EntityManagerUser() {
 		factory = Persistence.createEntityManagerFactory("Users");
 	}
 
